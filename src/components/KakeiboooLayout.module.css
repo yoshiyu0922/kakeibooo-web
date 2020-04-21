@@ -1,0 +1,88 @@
+.headerMenu {
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.headerMenuUl {
+    padding: 0px;
+}
+
+.headerMenuLi {
+    margin-left: 5px;
+    margin-right: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: white;
+    display: inline-block;
+}
+
+.headerMenuLiSelected {
+    margin-left: 5px;
+    margin-right: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: white;
+    display: inline-block;
+    background-color: #76718a;
+}
+
+.headerMenuLi a {
+    color: white;
+}
+
+.headerMenuLiSelected a {
+    color: white;
+}
+
+.headerMenuLi:hover {
+    background-color: #76718a;
+}
+
+
+.content {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 100%;
+}
+
+.contentTop {
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 100%;
+}
+
+.footer {
+    text-align: center;
+}
+
+.list {
+    margin-top: 10px;
+    padding: 24px;
+    background: #fbfbfb;
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+}
+
+.labelMonth {
+    font-weight: bold;
+    font-size: large;
+}
+
+.buttonMonth {
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.inputForm {
+    padding: 24px;
+    background: #fbfbfb;
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+}
+
+.selectBox {
+    width: 200px !important;
+}

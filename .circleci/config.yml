@@ -1,0 +1,21 @@
+version: 2.1
+jobs:
+  frontend_build:
+    docker:
+      - image: circleci/node
+    steps:
+      - checkout
+      - run:
+          name: Get sbt binary
+          command: |
+            export CI=false
+            cd /home/circleci/project/
+            npm install
+            npm run build
+            export CI=true
+
+workflows:
+  version: 2
+  kakeibooo_build:
+    jobs:
+      - frontend_build
