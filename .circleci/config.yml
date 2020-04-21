@@ -6,7 +6,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Get sbt binary
+          name: build
           command: |
             export CI=false
             cd /home/circleci/project/
