@@ -1,16 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Icon, Table} from "antd";
-import Repository from "../core/Repository";
+import Repository from "../../core/Repository";
 import {Budget, BudgetDetail, initBudgets} from "../../types/Budget";
 import {AxiosResponse} from "axios";
 import EditModal from './EditModal'
 import moment, {Moment} from 'moment';
-import styles from "../KakeiboooLayout.module.css";
+import styles from "../Root.module.css";
 
 
 const BudgetList: React.FC = () => {
   const [list, setList] = useState(initBudgets);
-  const [month, setMonth] = useState(new Date);
+  const [month, setMonth] = useState(new Date());
   const now = moment(Date.now());
   const [currentMonth, setCurrentMonth] = useState(now);
   const [isShowModal, setIsShowModal] = useState(false);

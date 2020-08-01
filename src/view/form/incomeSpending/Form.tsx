@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {Button, DatePicker, Form, Input, Modal, Row, Select, Spin} from 'antd';
-import styles from '../../KakeiboooLayout.module.css';
+import styles from '../../Root.module.css';
 import {AxiosResponse} from 'axios';
 import {CategoryType, MasterType, ParentCategoryType,} from '../../../types/Master';
 import {AccountType, initAccount} from '../../../types/Account';
 import {initRegisterInputValue, RegisterIncomeSpendingParams} from '../../../types/IncomeSpending';
 import {useSelector} from 'react-redux';
 import {masterSelector} from '../../../redux/AppStore';
-import Repository from '../../core/Repository'
+import Repository from '../../../core/Repository'
 
 const Option = Select.Option;
 

@@ -1,6 +1,6 @@
 import React, {FormEvent, useState} from 'react';
 import {Button, Form, Input, Modal, Row} from 'antd';
-import styles from '../KakeiboooLayout.module.css';
+import styles from '../Root.module.css';
 import axios from 'axios';
 
 type Token = {
@@ -9,7 +9,7 @@ type Token = {
 
 const isToken = (token: any): token is Token => typeof token.token != undefined;
 
-const LoginForm: React.FC = () => {
+const Login: React.FC = () => {
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
 
@@ -67,4 +67,4 @@ const LoginForm: React.FC = () => {
   );
 };
 
-export default LoginForm;
+export default Login;

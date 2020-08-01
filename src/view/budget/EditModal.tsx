@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Form, Input, Modal, Row, Select, Spin} from "antd";
-import styles from "../KakeiboooLayout.module.css";
-import Repository from "../core/Repository";
+import styles from "../Root.module.css";
+import Repository from "../../core/Repository";
 import {useSelector} from "react-redux";
 import {masterSelector} from "../../redux/AppStore";
 import {Budget, initializeUpdateParams, UpdateBudgetParams} from "../../types/Budget";
@@ -48,7 +48,7 @@ const EditModal: React.FC<Props> = props => {
 
   const showCategoryName = () => {
     const target = masterState.value.categories.find(v => {
-      return v.id == props.data.categoryId
+      return v.id === props.data.categoryId
     });
 
     return target ? target.name : ""

@@ -1,8 +1,8 @@
 import React from 'react';
 import 'antd/dist/antd.css';
-import styles from './KakeiboooLayout.module.css';
+import styles from './Root.module.css';
 import {Layout} from 'antd';
-import Home from './Home';
+import Top from './pages/Top';
 import IncomeSpendingList from './list/incomeSpending/IncomeSpendingList'
 import BudgetList from './budget/BudgetList'
 import {BrowserRouter, NavLink, Route, Switch} from 'react-router-dom';
@@ -10,7 +10,7 @@ import Auth from './Auth';
 
 const {Header, Footer, Content} = Layout;
 
-const KakeiboooLayout: React.FC = () => {
+const Root: React.FC = () => {
 
   const styleHeaderMenuLi = (path: string, label: string) => {
     return (<NavLink to={path} activeClassName={styles.headerMenuLiSelected}>
@@ -40,7 +40,7 @@ const KakeiboooLayout: React.FC = () => {
           <Switch>
             <Auth>
               <Switch>
-                <Route extract path="/top" component={Home}/>
+                <Route extract path="/top" component={Top}/>
                 <Route extract path="/incomeSpending"
                        component={() => <IncomeSpendingList offset={30} isMain={true}/>}/>
                 <Route extract path="/budget" component={BudgetList}/>>
@@ -61,4 +61,4 @@ const HomeTemp = () => (
     <p>Welcome to ようこそ</p>
   </div>
 )
-export default KakeiboooLayout;
+export default Root;

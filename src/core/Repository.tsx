@@ -1,7 +1,7 @@
 import axios, {AxiosResponse} from 'axios';
-import {RegisterIncomeSpendingParams, UpdateIncomeSpendingParams} from "../../types/IncomeSpending";
-import {MasterType} from "../../types/Master";
-import {UpdateBudgetParams} from "../../types/Budget";
+import {RegisterIncomeSpendingParams, UpdateIncomeSpendingParams} from "../types/IncomeSpending";
+import {MasterType} from "../types/Master";
+import {UpdateBudgetParams} from "../types/Budget";
 
 
 class Repository {

@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Icon, Modal, Table} from "antd";
 import {AxiosResponse} from "axios";
-import styles from '../../KakeiboooLayout.module.css';
+import styles from '../../Root.module.css';
 import {IncomeSpendingType, initIncomeSpending} from "../../../types/IncomeSpending";
-import Repository from '../../core/Repository';
+import Repository from '../../../core/Repository';
 import moment, {Moment} from 'moment';
 import EditModal from './EditModal'
 import {useSelector} from "react-redux";
@@ -21,7 +21,7 @@ const IncomeSpendingList: React.FC<Props> = props => {
   const masterState = useSelector(masterSelector);
   const now = moment(Date.now());
   const [currentMonth, setCurrentMonth] = useState(now);
-  const [month, setMonth] = useState(new Date);
+  const [month, setMonth] = useState(new Date());
   const [isShowModal, setIsShowModal] = useState(false);
   const [selectedData, setSelectedData] = useState({} as IncomeSpendingType);
 
@@ -39,7 +39,7 @@ const IncomeSpendingList: React.FC<Props> = props => {
   };
 
   useEffect(() => {
-    if (!masterState.isFetching) updateList(now);
+    if (!masterState.isFetching) updateList(moment(Date.now()));
   }, [masterState]);
 
   const confirmDelete = (id: number, data: IncomeSpendingType) => {

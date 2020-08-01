@@ -1,6 +1,6 @@
 import React from 'react';
 import {Redirect} from 'react-router';
-import LoginForm from "./login/LoginForm";
+import Login from "./pages/Login";
 
 type Props = {
   children: React.ReactNode;
@@ -13,7 +13,7 @@ const Auth: React.FC<Props> = props => {
 
   if (token === null) {
     return path === '/login' ?
-      <LoginForm/> : <Redirect to={'/login'}/>;
+      <Login/> : <Redirect to={'/login'}/>;
   } else {
     return path === '/login' || path === '/' ?
       <Redirect to={'/top'}/> : <React.Fragment>{props.children}</React.Fragment>

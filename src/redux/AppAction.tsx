@@ -1,6 +1,6 @@
 import {MasterType} from '../types/Master';
 import {Dispatch} from 'redux';
-import Repository from "../components/core/Repository";
+import Repository from "../core/Repository";
 import {AppState} from "./AppState";
 
 export const SET_MASTER = 'SET_MASTER';

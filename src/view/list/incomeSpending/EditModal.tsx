@@ -6,10 +6,10 @@ import {
   initUpdateInputValue,
   UpdateIncomeSpendingParams
 } from "../../../types/IncomeSpending";
-import styles from "../../KakeiboooLayout.module.css";
+import styles from "../../Root.module.css";
 import {AccountType, initAccount} from "../../../types/Account";
 import {CategoryType, initMaster, MasterType} from "../../../types/Master";
-import Repository from "../../core/Repository";
+import Repository from "../../../core/Repository";
 import {AxiosResponse} from "axios";
 import moment from 'moment';
 import {useSelector} from "react-redux";

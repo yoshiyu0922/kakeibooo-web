@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import 'antd/dist/antd.css';
-import KakeiboooLayout from './components/KakeiboooLayout';
+import Root from './view/Root';
 import {DispatchToPropsType} from "./redux/AppContainer";
 import {AppState} from "./redux/AppState";
 
@@ -11,7 +11,7 @@ const App: React.FC<Props> = (props: Props) => {
     props.fetchMaster({} as AppState);
   }, []);
 
-  return (<KakeiboooLayout/>);
+  return (<Root/>);
 };
 
 export default App;

@@ -1,11 +1,11 @@
 import React from 'react';
-import IncomeSpendFormTabs from './form/incomeSpending/FormTabs';
-import IncomeSpendingList from './list/incomeSpending/IncomeSpendingList'
-import Summary from './list/asset/Summary';
-import styles from './KakeiboooLayout.module.css';
+import IncomeSpendFormTabs from '../form/incomeSpending/FormTabs';
+import IncomeSpendingList from '../list/incomeSpending/IncomeSpendingList'
+import Summary from '../list/asset/Summary';
+import styles from '../Root.module.css';
 import {Col, Row} from 'antd';
 
-const Home: React.FC = () => {
+const Top: React.FC = () => {
 
 
   return (
@@ -23,4 +23,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default Top;
