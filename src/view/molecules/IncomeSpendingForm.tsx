@@ -9,21 +9,21 @@ import {
   Select,
   Spin,
 } from 'antd';
-import styles from '../../Root.module.css';
+import styles from '../Root.module.css';
 import { AxiosResponse } from 'axios';
 import {
-  CategoryType,
+  CategoryDetailType,
   MasterType,
-  ParentCategoryType,
-} from '../../../types/Master';
-import { AccountType, initAccount } from '../../../types/Account';
+  CategoryType,
+} from '../../types/Master';
+import { AccountType, initAccount } from '../../types/Account';
 import {
   initRegisterInputValue,
   RegisterIncomeSpendingParams,
-} from '../../../types/IncomeSpending';
+} from '../../types/IncomeSpending';
 import { useSelector } from 'react-redux';
-import { masterSelector } from '../../../redux/AppStore';
-import Repository from '../../../core/Repository';
+import { masterSelector } from '../../redux/AppStore';
+import Repository from '../../core/Repository';
 
 const Option = Select.Option;
 
@@ -33,13 +33,15 @@ interface OwnProps {
 
 type Props = OwnProps;
 
-const IncomeSpendingFormBase: React.FC<Props> = (props: Props) => {
+const IncomeSpendingForm: React.FC<Props> = (props: Props) => {
   const initAccounts = new Array(initAccount);
   const masterState = useSelector(masterSelector);
   const [parentCategories, setParentCategories] = useState(
-    masterState.value.parentCategories
+    masterState.value.categories
   );
-  const [categories, setCategories] = useState(masterState.value.categories);
+  const [categories, setCategories] = useState(
+    masterState.value.categoryDetails
+  );
   const [howToPays, setHowToPays] = useState(masterState.value.howToPays);
   const [masterData, setMasterData] = useState(masterState.value);
   const [accounts, setAccounts] = useState(initAccounts);
@@ -51,20 +53,18 @@ const IncomeSpendingFormBase: React.FC<Props> = (props: Props) => {
   const SPEND_KBN = 2;
 
   const updateCategories = (id: number) => {
-    const list: CategoryType[] = masterData.categories.filter(
-      (category: CategoryType) => {
-        return category.parentCategoryId === id;
+    const list: CategoryDetailType[] = masterData.categoryDetails.filter(
+      (category: CategoryDetailType) => {
+        return category.categoryId === id;
       }
     );
     setCategories(list);
   };
 
   const updateMaster = (m: MasterType) => {
-    const dispParentCategory = m.parentCategories.filter(
-      (p: ParentCategoryType) => {
-        return p.isIncome === (props.kbn !== 1);
-      }
-    );
+    const dispParentCategory = m.categories.filter((p: CategoryType) => {
+      return p.isIncome === (props.kbn !== 1);
+    });
     setParentCategories(dispParentCategory);
     setHowToPays(m.howToPays);
     setMasterData(m);
@@ -258,4 +258,4 @@ const IncomeSpendingFormBase: React.FC<Props> = (props: Props) => {
   );
 };
 
-export default IncomeSpendingFormBase;
+export default IncomeSpendingForm;

@@ -5,13 +5,16 @@ import { DispatchToPropsType } from './redux/AppContainer';
 import { AppState } from './redux/AppState';
 import GraphQLClient from './core/graphQLClient';
 import Dependency from './core/dependency';
-import UserRepository from './repository/userRepository/userRepository';
+import UserRepository from './repository/userRepository';
 import Authentication from './usecase/authentication';
 
 type Props = DispatchToPropsType;
 
+const token: string | null = localStorage.getItem('token');
+
 const graphQLClient = new GraphQLClient({
   url: 'http://localhost:9000/execute',
+  token: token,
 });
 
 // repositories
@@ -26,7 +29,7 @@ const dependency: Dependency = {
 
 const App: React.FC<Props> = (props: Props) => {
   useEffect(() => {
-    props.fetchMaster({} as AppState);
+    props.fetchMaster(graphQLClient, {} as AppState);
   }, []);
 
   return <Root dependency={dependency} />;

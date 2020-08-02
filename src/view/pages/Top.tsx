@@ -1,5 +1,5 @@
 import React from 'react';
-import IncomeSpendFormTabs from '../form/incomeSpending/FormTabs';
+import IncomeSpendFormTabs from '../organisms/IncomeSpendingFormTabs';
 import IncomeSpendingList from '../list/incomeSpending/IncomeSpendingList';
 import Summary from '../list/asset/Summary';
 import styles from '../Root.module.css';

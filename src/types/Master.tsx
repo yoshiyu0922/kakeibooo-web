@@ -1,13 +1,13 @@
-export type ParentCategoryType = {
+export type CategoryType = {
   id: number;
   name: string;
   isIncome: boolean;
   isDeleted: boolean;
 };
 
-export type CategoryType = {
+export type CategoryDetailType = {
   id: number;
-  parentCategoryId: number;
+  categoryId: number;
   name: string;
   isDeleted: boolean;
 };
@@ -18,12 +18,12 @@ export type HowToPayType = {
 };
 
 export type MasterType = {
-  parentCategories: ParentCategoryType[];
   categories: CategoryType[];
+  categoryDetails: CategoryDetailType[];
   howToPays: HowToPayType[];
 };
 export const initMaster = {
-  parentCategories: new Array<ParentCategoryType>(),
   categories: new Array<CategoryType>(),
+  categoryDetails: new Array<CategoryDetailType>(),
   howToPays: new Array<HowToPayType>(),
 } as MasterType;

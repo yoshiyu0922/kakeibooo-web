@@ -1,7 +1,8 @@
 import { MasterType } from '../types/Master';
 import { Dispatch } from 'redux';
-import Repository from '../core/Repository';
 import { AppState } from './AppState';
+import GraphQLClient from '../core/graphQLClient';
+import MasterRepository from '../repository/masterRepository';
 
 export const SET_MASTER = 'SET_MASTER';
 
@@ -13,32 +14,35 @@ export function setMasterData(master: MasterType): MasterActionTypes {
   };
 }
 
-function fetchMaster() {
+function fetchMaster(graphQLClient: GraphQLClient) {
   return async (dispatch: Dispatch<MasterActionTypes>) => {
-    const result: MasterType = await Repository.asyncFetchMaster(
-      res => {
+    const result: MasterType = await new MasterRepository({
+      graphQLClient: graphQLClient,
+    })
+      .fetchAll()
+      .then(res => {
         return res.data as MasterType;
-      },
-      err => {
+      })
+      .catch(err => {
         console.error(err);
         return {} as MasterType;
-      }
-    );
+      });
+
     dispatch(setMasterData(result));
     return result;
   };
 }
 
 const shouldFetchPosts = (state: AppState) => {
-  return !state.value || state.value.parentCategories.length === 0;
+  return !state.value || state.value.categories.length === 0;
 };
 
-export const fetchMasterIfNeed = () => async (
+export const fetchMasterIfNeed = (graphQLClient: GraphQLClient) => async (
   dispatch: Dispatch<MasterActionTypes>,
   state: AppState
 ) => {
   if (shouldFetchPosts(state)) {
-    return await fetchMaster()(dispatch);
+    return await fetchMaster(graphQLClient)(dispatch);
   } else {
     return state.value;
   }

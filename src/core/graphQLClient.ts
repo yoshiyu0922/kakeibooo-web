@@ -1,15 +1,26 @@
 import {
   ApolloClient,
+  createHttpLink,
   InMemoryCache,
   NormalizedCacheObject,
 } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 
 class GraphQLClient {
   private apollo: ApolloClient<NormalizedCacheObject>;
 
-  constructor({ url }: { url: string }) {
+  constructor({ url, token }: { url: string; token: string | null }) {
+    const authLink = setContext((_, { headers }) => {
+      return {
+        headers: {
+          ...headers,
+          authorization: token ? `Bearer ${token}` : '',
+        },
+      };
+    });
+
     this.apollo = new ApolloClient({
-      uri: url,
+      link: authLink.concat(createHttpLink({ uri: url })),
       cache: new InMemoryCache(),
     });
   }

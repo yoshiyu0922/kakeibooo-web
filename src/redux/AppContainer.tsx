@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { fetchMasterIfNeed, MasterActionTypes } from './AppAction';
 import App from '../App';
+import GraphQLClient from '../core/graphQLClient';
 
 const mapStateToProps = (state: AppState): AppState => {
   return state;
@@ -10,8 +11,8 @@ const mapStateToProps = (state: AppState): AppState => {
 
 const mapDispatchToProps = (dispatch: Dispatch<MasterActionTypes>) => {
   return {
-    fetchMaster: async (state: AppState) => {
-      await fetchMasterIfNeed()(dispatch, state);
+    fetchMaster: async (graphQLClient: GraphQLClient, state: AppState) => {
+      await fetchMasterIfNeed(graphQLClient)(dispatch, state);
     },
   };
 };

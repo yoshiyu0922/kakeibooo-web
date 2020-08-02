@@ -52,7 +52,7 @@ const EditModal: React.FC<Props> = props => {
   };
 
   const showCategoryName = () => {
-    const target = masterState.value.categories.find(v => {
+    const target = masterState.value.categoryDetails.find(v => {
       return v.id === props.data.categoryId;
     });
 

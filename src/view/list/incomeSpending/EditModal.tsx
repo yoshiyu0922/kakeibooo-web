@@ -8,7 +8,11 @@ import {
 } from '../../../types/IncomeSpending';
 import styles from '../../Root.module.css';
 import { AccountType, initAccount } from '../../../types/Account';
-import { CategoryType, initMaster, MasterType } from '../../../types/Master';
+import {
+  CategoryDetailType,
+  initMaster,
+  MasterType,
+} from '../../../types/Master';
 import Repository from '../../../core/Repository';
 import { AxiosResponse } from 'axios';
 import moment from 'moment';
@@ -28,19 +32,19 @@ const EditModal: React.FC<Props> = props => {
   const masterState = useSelector(masterSelector);
   const [accounts, setAccounts] = useState(new Array(initAccount));
   const [parentCategories, setParentCategories] = useState(
-    props.masterData.parentCategories
+    props.masterData.categories
   );
   const [parentCategoryId, setParentCategoryId] = useState(0);
   const [categoryId, setCategoryId] = useState(0);
-  const [categories, setCategories] = useState(initMaster.categories);
+  const [categories, setCategories] = useState(initMaster.categoryDetails);
   const [inputParams, setInputParams] = useState<UpdateIncomeSpendingParams>(
     initUpdateInputValue
   );
 
   const updateCategories = (id: number, isOnChange: boolean) => {
-    const list: CategoryType[] = props.masterData.categories.filter(
-      (category: CategoryType) => {
-        return category.parentCategoryId === id;
+    const list: CategoryDetailType[] = props.masterData.categoryDetails.filter(
+      (category: CategoryDetailType) => {
+        return category.categoryId === id;
       }
     );
     setParentCategoryId(id);
@@ -81,7 +85,7 @@ const EditModal: React.FC<Props> = props => {
   }, []);
 
   useEffect(() => {
-    setParentCategories(masterState.value.parentCategories);
+    setParentCategories(masterState.value.categories);
   }, [props.masterData]);
 
   const submit = () => {

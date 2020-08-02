@@ -1,4 +1,4 @@
-import UserRepository from '../repository/userRepository/userRepository';
+import UserRepository from '../repository/userRepository';
 
 class Authentication {
   private userRepository: UserRepository;

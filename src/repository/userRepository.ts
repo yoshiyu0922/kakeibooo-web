@@ -1,4 +1,4 @@
-import GraphQLClient from '../../core/graphQLClient';
+import GraphQLClient from '../core/graphQLClient';
 import gql from 'graphql-tag';
 
 class UserRepository {
