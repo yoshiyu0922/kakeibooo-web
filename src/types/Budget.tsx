@@ -5,13 +5,13 @@ export type Budget = {
   isIncome: false;
   content: string;
   details: BudgetDetail[];
-}
+};
 
 export type BudgetDetail = {
   amount: number;
   resultAmount: number;
   howToPayId: number;
-}
+};
 export const initBudgets = new Array<Budget>();
 
 export interface UpdateBudgetParams {
@@ -24,11 +24,10 @@ export interface UpdateBudgetParams {
 }
 
 export const initializeUpdateParams = (data: Budget, initHowToPay: number) => {
-
   let detail = {} as BudgetDetail | undefined;
   if (data.details)
     detail = data.details.find((b: BudgetDetail) => {
-      return b.howToPayId === initHowToPay
+      return b.howToPayId === initHowToPay;
     });
   return {
     categoryId: data.categoryId,
@@ -37,5 +36,5 @@ export const initializeUpdateParams = (data: Budget, initHowToPay: number) => {
     howToPayId: initHowToPay,
     isIncome: data.isIncome,
     content: data.content,
-  } as UpdateBudgetParams
+  } as UpdateBudgetParams;
 };

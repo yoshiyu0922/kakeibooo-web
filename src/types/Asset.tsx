@@ -3,8 +3,8 @@ export type AssetType = {
   name: string;
   accounts: AccountType[];
   sortIndex: number;
-  isDeleted: boolean
-}
+  isDeleted: boolean;
+};
 
 export type AccountType = {
   accountId: number;
@@ -13,6 +13,6 @@ export type AccountType = {
   name: string;
   balance: number;
   sortIndex: number;
-  isDeleted: boolean
-}
+  isDeleted: boolean;
+};
 export const initAssets = new Array<AssetType>();

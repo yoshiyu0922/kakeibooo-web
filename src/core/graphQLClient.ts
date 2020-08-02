@@ -1,21 +1,25 @@
-import { ApolloClient, InMemoryCache, NormalizedCacheObject } from "@apollo/client";
+import {
+  ApolloClient,
+  InMemoryCache,
+  NormalizedCacheObject,
+} from '@apollo/client';
 
 class GraphQLClient {
   private apollo: ApolloClient<NormalizedCacheObject>;
 
-  constructor({url}: {url: string}) {
+  constructor({ url }: { url: string }) {
     this.apollo = new ApolloClient({
       uri: url,
-      cache: new InMemoryCache()
-    })
+      cache: new InMemoryCache(),
+    });
   }
 
   public query(query: any, { variables }: { variables?: any } = {}) {
-    return this.apollo.query({ query, variables })
+    return this.apollo.query({ query, variables });
   }
 
   public mutation(mutation: any, { variables }: { variables?: any } = {}) {
-    return this.apollo.mutate({ mutation, variables })
+    return this.apollo.mutate({ mutation, variables });
   }
 }
 

@@ -1,8 +1,8 @@
-import {AppState} from './AppState';
-import {connect} from 'react-redux';
-import {Dispatch} from 'redux';
-import {fetchMasterIfNeed, MasterActionTypes} from './AppAction';
-import App from "../App";
+import { AppState } from './AppState';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import { fetchMasterIfNeed, MasterActionTypes } from './AppAction';
+import App from '../App';
 
 const mapStateToProps = (state: AppState): AppState => {
   return state;

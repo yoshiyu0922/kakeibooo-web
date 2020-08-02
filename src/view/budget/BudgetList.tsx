@@ -1,12 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import {Button, Icon, Table} from "antd";
-import Repository from "../../core/Repository";
-import {Budget, BudgetDetail, initBudgets} from "../../types/Budget";
-import {AxiosResponse} from "axios";
-import EditModal from './EditModal'
-import moment, {Moment} from 'moment';
-import styles from "../Root.module.css";
-
+import React, { useEffect, useState } from 'react';
+import { Button, Icon, Table } from 'antd';
+import Repository from '../../core/Repository';
+import { Budget, BudgetDetail, initBudgets } from '../../types/Budget';
+import { AxiosResponse } from 'axios';
+import EditModal from './EditModal';
+import moment, { Moment } from 'moment';
+import styles from '../Root.module.css';
 
 const BudgetList: React.FC = () => {
   const [list, setList] = useState(initBudgets);
@@ -18,11 +17,11 @@ const BudgetList: React.FC = () => {
 
   const updateList = (targetDate: Moment) => {
     const repository = Repository.instance;
-    const yyyyMM = parseInt(targetDate.format("YYYYMM"));
+    const yyyyMM = parseInt(targetDate.format('YYYYMM'));
     repository.fetchBudgets(yyyyMM, (res: AxiosResponse) => {
       const list = res.data.list as Budget[];
       setList(list);
-    })
+    });
   };
 
   useEffect(() => {
@@ -30,14 +29,17 @@ const BudgetList: React.FC = () => {
   }, []);
 
   const showModal = (id: number, data: Budget) => {
-    console.log(data)
+    console.log(data);
     setSelectedData(data);
     setIsShowModal(true);
   };
 
-  const extractBudgetDetail = (payMethod: number, budget: Budget): BudgetDetail | undefined => {
+  const extractBudgetDetail = (
+    payMethod: number,
+    budget: Budget
+  ): BudgetDetail | undefined => {
     return budget.details.find((b: BudgetDetail) => {
-      return b.howToPayId === payMethod
+      return b.howToPayId === payMethod;
     });
   };
 
@@ -59,16 +61,20 @@ const BudgetList: React.FC = () => {
       dataIndex: 'categoryId',
       key: 'categoryId',
       render: (id: number, data: Budget) => {
-        return (<React.Fragment>
-          <Button size="small" onClick={() => showModal(id, data)}><Icon type="edit"/></Button>
-        </React.Fragment>)
+        return (
+          <React.Fragment>
+            <Button size="small" onClick={() => showModal(id, data)}>
+              <Icon type="edit" />
+            </Button>
+          </React.Fragment>
+        );
       },
-      width: 10
+      width: 10,
     },
     {
       title: 'カテゴリ',
       dataIndex: 'categoryName',
-      width: 80
+      width: 80,
     },
     {
       title: '予算（現金）',
@@ -76,9 +82,9 @@ const BudgetList: React.FC = () => {
       render: (v: number, record: Budget) => {
         const detail = extractBudgetDetail(2, record);
         const amount = detail ? detail.amount : 0;
-        return (<span> {amount.toLocaleString()}円</span>)
+        return <span> {amount.toLocaleString()}円</span>;
       },
-      width: 40
+      width: 40,
     },
     {
       title: '予算（カード）',
@@ -86,9 +92,9 @@ const BudgetList: React.FC = () => {
       render: (v: number, record: Budget) => {
         const detail = extractBudgetDetail(1, record);
         const amount = detail ? detail.amount : 0;
-        return (<span> {amount.toLocaleString()}円</span>)
+        return <span> {amount.toLocaleString()}円</span>;
       },
-      width: 40
+      width: 40,
     },
     {
       title: '実績（現金）',
@@ -96,9 +102,9 @@ const BudgetList: React.FC = () => {
       render: (v: number, record: Budget) => {
         const detail = extractBudgetDetail(2, record);
         const amount = detail ? detail.resultAmount : 0;
-        return (<span> {amount.toLocaleString()}円</span>)
+        return <span> {amount.toLocaleString()}円</span>;
       },
-      width: 40
+      width: 40,
     },
     {
       title: '実績（カード）',
@@ -106,40 +112,51 @@ const BudgetList: React.FC = () => {
       render: (v: number, record: Budget) => {
         const detail = extractBudgetDetail(1, record);
         const amount = detail ? detail.resultAmount : 0;
-        return (<span> {amount.toLocaleString()}円</span>)
+        return <span> {amount.toLocaleString()}円</span>;
       },
-      width: 40
+      width: 40,
     },
     {
       title: '内容',
       dataIndex: 'content',
       key: 'content',
-      width: 150
-    }
+      width: 150,
+    },
   ];
-
 
   return (
     <div className={styles.list}>
-      <Button className={styles.buttonMonth} onClick={() => updateMonth(-1)}><Icon type="caret-left"/></Button>
+      <Button className={styles.buttonMonth} onClick={() => updateMonth(-1)}>
+        <Icon type="caret-left" />
+      </Button>
       <span className={styles.labelMonth}>
-                {currentMonth.startOf("month").format("YYYY/MM/DD")}&nbsp;〜&nbsp;{currentMonth.endOf("month").format("YYYY/MM/DD")}
-              </span>
+        {currentMonth.startOf('month').format('YYYY/MM/DD')}&nbsp;〜&nbsp;
+        {currentMonth.endOf('month').format('YYYY/MM/DD')}
+      </span>
       <Button className={styles.buttonMonth} onClick={() => updateMonth(1)}>
-        <Icon type="caret-right"/>
+        <Icon type="caret-right" />
       </Button>
       <Button className={styles.buttonMonth} onClick={() => updateMonth(0)}>
         this month
       </Button>
-      <Table pagination={{pageSize: 1000}} rowKey={"categoryId"} columns={columns} dataSource={list}
-             scroll={{x: 1200}}/>
-      <EditModal isShowModal={isShowModal} data={selectedData} onCloseAfterUpdated={() => {
-        const _month = moment(month);
-        updateList(_month);
-        setIsShowModal(false)
-      }}/>
+      <Table
+        pagination={{ pageSize: 1000 }}
+        rowKey={'categoryId'}
+        columns={columns}
+        dataSource={list}
+        scroll={{ x: 1200 }}
+      />
+      <EditModal
+        isShowModal={isShowModal}
+        data={selectedData}
+        onCloseAfterUpdated={() => {
+          const _month = moment(month);
+          updateList(_month);
+          setIsShowModal(false);
+        }}
+      />
     </div>
-  )
+  );
 };
 
 export default BudgetList;

@@ -1,7 +1,7 @@
-import {MasterType} from '../types/Master';
-import {Dispatch} from 'redux';
-import Repository from "../core/Repository";
-import {AppState} from "./AppState";
+import { MasterType } from '../types/Master';
+import { Dispatch } from 'redux';
+import Repository from '../core/Repository';
+import { AppState } from './AppState';
 
 export const SET_MASTER = 'SET_MASTER';
 
@@ -30,14 +30,17 @@ function fetchMaster() {
 }
 
 const shouldFetchPosts = (state: AppState) => {
-  return !state.value || state.value.parentCategories.length === 0
+  return !state.value || state.value.parentCategories.length === 0;
 };
 
-export const fetchMasterIfNeed = () => async (dispatch: Dispatch<MasterActionTypes>, state: AppState) => {
+export const fetchMasterIfNeed = () => async (
+  dispatch: Dispatch<MasterActionTypes>,
+  state: AppState
+) => {
   if (shouldFetchPosts(state)) {
-    return await fetchMaster()(dispatch)
+    return await fetchMaster()(dispatch);
   } else {
-    return state.value
+    return state.value;
   }
 };
 

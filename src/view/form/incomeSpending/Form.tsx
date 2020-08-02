@@ -1,13 +1,29 @@
-import React, {useEffect, useState} from 'react';
-import {Button, DatePicker, Form, Input, Modal, Row, Select, Spin} from 'antd';
+import React, { useEffect, useState } from 'react';
+import {
+  Button,
+  DatePicker,
+  Form,
+  Input,
+  Modal,
+  Row,
+  Select,
+  Spin,
+} from 'antd';
 import styles from '../../Root.module.css';
-import {AxiosResponse} from 'axios';
-import {CategoryType, MasterType, ParentCategoryType,} from '../../../types/Master';
-import {AccountType, initAccount} from '../../../types/Account';
-import {initRegisterInputValue, RegisterIncomeSpendingParams} from '../../../types/IncomeSpending';
-import {useSelector} from 'react-redux';
-import {masterSelector} from '../../../redux/AppStore';
-import Repository from '../../../core/Repository'
+import { AxiosResponse } from 'axios';
+import {
+  CategoryType,
+  MasterType,
+  ParentCategoryType,
+} from '../../../types/Master';
+import { AccountType, initAccount } from '../../../types/Account';
+import {
+  initRegisterInputValue,
+  RegisterIncomeSpendingParams,
+} from '../../../types/IncomeSpending';
+import { useSelector } from 'react-redux';
+import { masterSelector } from '../../../redux/AppStore';
+import Repository from '../../../core/Repository';
 
 const Option = Select.Option;
 
@@ -28,7 +44,9 @@ const IncomeSpendingFormBase: React.FC<Props> = (props: Props) => {
   const [masterData, setMasterData] = useState(masterState.value);
   const [accounts, setAccounts] = useState(initAccounts);
   const [loadingState, setLoadingState] = useState(false);
-  const [inputParams, setInputParams] = useState<RegisterIncomeSpendingParams>(initRegisterInputValue);
+  const [inputParams, setInputParams] = useState<RegisterIncomeSpendingParams>(
+    initRegisterInputValue
+  );
   const INCOME_KBN = 1;
   const SPEND_KBN = 2;
 
@@ -60,13 +78,15 @@ const IncomeSpendingFormBase: React.FC<Props> = (props: Props) => {
       inputParams,
       (_: AxiosResponse) => {
         Modal.info({
-          title: '登録成功', content: '登録に成功しました', onOk: () => {
-            window.location.href = "/top"
-          }
+          title: '登録成功',
+          content: '登録に成功しました',
+          onOk: () => {
+            window.location.href = '/top';
+          },
         });
       },
       () => {
-        Modal.error({title: '登録失敗', content: '登録に失敗しました'});
+        Modal.error({ title: '登録失敗', content: '登録に失敗しました' });
       },
       () => {
         setLoadingState(false);
@@ -84,8 +104,8 @@ const IncomeSpendingFormBase: React.FC<Props> = (props: Props) => {
     if (props.kbn === SPEND_KBN) {
       setInputParams({
         ...inputParams,
-        isIncome: true
-      })
+        isIncome: true,
+      });
     }
   }, []);
 
@@ -104,7 +124,7 @@ const IncomeSpendingFormBase: React.FC<Props> = (props: Props) => {
               const howToPayId = data as number;
               setInputParams({
                 ...inputParams,
-                howToPayId: howToPayId
+                howToPayId: howToPayId,
               });
             }}
           >
@@ -127,16 +147,16 @@ const IncomeSpendingFormBase: React.FC<Props> = (props: Props) => {
         <Row>
           <DatePicker
             placeholder="日付"
-            style={{width: '50%'}}
+            style={{ width: '50%' }}
             onChange={(date, dateString) => {
               setInputParams({
                 ...inputParams,
-                accrualDate: dateString
+                accrualDate: dateString,
               });
             }}
           />
         </Row>
-        <Row style={{marginTop: 3}}>
+        <Row style={{ marginTop: 3 }}>
           <Form.Item>
             <Select
               className={styles.selectBox}
@@ -161,7 +181,7 @@ const IncomeSpendingFormBase: React.FC<Props> = (props: Props) => {
                 const id = data as number;
                 setInputParams({
                   ...inputParams,
-                  categoryId: id
+                  categoryId: id,
                 });
               }}
             >
@@ -175,19 +195,19 @@ const IncomeSpendingFormBase: React.FC<Props> = (props: Props) => {
             </Select>
           </Form.Item>
         </Row>
-        <Row style={{marginTop: 3}}>
+        <Row style={{ marginTop: 3 }}>
           <Form.Item>
             <Input
               value={inputParams.amount}
               placeholder="金額"
               addonAfter="円"
-              onChange={(e) => {
+              onChange={e => {
                 const amount = parseInt(e.target.value);
                 const reg = /^-?(0|[1-9][0-9]*)(\.[0-9]*)?$/;
                 if (reg.test(e.target.value)) {
                   setInputParams({
                     ...inputParams,
-                    amount: amount
+                    amount: amount,
                   });
                 }
               }}
@@ -202,7 +222,7 @@ const IncomeSpendingFormBase: React.FC<Props> = (props: Props) => {
                 const accountId = data as number;
                 setInputParams({
                   ...inputParams,
-                  accountId: accountId
+                  accountId: accountId,
                 });
               }}
             >
@@ -216,20 +236,22 @@ const IncomeSpendingFormBase: React.FC<Props> = (props: Props) => {
             </Select>
           </Form.Item>
         </Row>
-        <Row style={{marginTop: 3}}>
+        <Row style={{ marginTop: 3 }}>
           <Input
             placeholder="内容"
-            onChange={(e) => {
+            onChange={e => {
               const content = e.target.value;
               setInputParams({
                 ...inputParams,
-                content: content
+                content: content,
               });
             }}
           />
         </Row>
-        <Row style={{marginTop: 4, textAlign: 'center'}}>
-          <Button type="primary" onClick={submit}>保存する</Button>
+        <Row style={{ marginTop: 4, textAlign: 'center' }}>
+          <Button type="primary" onClick={submit}>
+            保存する
+          </Button>
         </Row>
       </Form>
     </Spin>
