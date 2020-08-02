@@ -7,10 +7,13 @@ import IncomeSpendingList from './list/incomeSpending/IncomeSpendingList'
 import BudgetList from './budget/BudgetList'
 import {BrowserRouter, NavLink, Route, Switch} from 'react-router-dom';
 import Auth from './Auth';
+import { DependencyProps } from "../core/dependency";
 
 const {Header, Footer, Content} = Layout;
 
-const Root: React.FC = () => {
+type Props = DependencyProps
+
+const Root: React.FC<Props> = (props: Props) => {
 
   const styleHeaderMenuLi = (path: string, label: string) => {
     return (<NavLink to={path} activeClassName={styles.headerMenuLiSelected}>
@@ -38,7 +41,7 @@ const Root: React.FC = () => {
         </Header>
         <Content className={styles.content}>
           <Switch>
-            <Auth>
+            <Auth dependency={props.dependency}>
               <Switch>
                 <Route extract path="/top" component={Top}/>
                 <Route extract path="/incomeSpending"
@@ -55,10 +58,4 @@ const Root: React.FC = () => {
   );
 };
 
-const HomeTemp = () => (
-  <div>
-    <h2>Home</h2>
-    <p>Welcome to ようこそ</p>
-  </div>
-)
 export default Root;

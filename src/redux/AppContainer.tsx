@@ -11,7 +11,7 @@ const mapStateToProps = (state: AppState): AppState => {
 const mapDispatchToProps = (dispatch: Dispatch<MasterActionTypes>) => {
   return {
     fetchMaster: async (state: AppState) => {
-      return await fetchMasterIfNeed()(dispatch, state);
+      await fetchMasterIfNeed()(dispatch, state);
     },
   };
 };

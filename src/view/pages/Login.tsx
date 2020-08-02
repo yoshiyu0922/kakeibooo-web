@@ -1,38 +1,39 @@
-import React, {FormEvent, useState} from 'react';
-import {Button, Form, Input, Modal, Row} from 'antd';
+import React, { FormEvent, useState } from 'react';
+import { Button, Form, Input, Modal, Row } from 'antd';
 import styles from '../Root.module.css';
-import axios from 'axios';
+import { DependencyProps } from "../../core/dependency";
 
 type Token = {
-  token: string;
+  auth: {
+    token: string;
+  }
 };
+
+type Props = DependencyProps
 
 const isToken = (token: any): token is Token => typeof token.token != undefined;
 
-const Login: React.FC = () => {
+const Login: React.FC<Props> = (props: Props) => {
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
 
   const authorization = (e: FormEvent) => {
     e.preventDefault();
-    axios
-      .post('http://localhost:9000/auth', {
-        userId: userId,
-        password: password,
-      })
-      .then(res => {
-        if (isToken(res.data)) {
-          const response = res.data as Token;
-          localStorage.setItem('token', response.token);
-          window.location.href = '/top';
-        }
-      })
-      .catch(() => {
-        Modal.error({
-          title: '認証失敗',
-          content: 'ログインIDもしくはパスワードが間違っています',
-        });
+
+    props.dependency.authentication.authenticate(userId, password)
+    .then(res => {
+      if (isToken(res.data)) {
+        const response = res.data as Token;
+        localStorage.setItem('token', response.auth.token);
+        window.location.href = '/top';
+      }
+    })
+    .catch(() => {
+      Modal.error({
+        title: '認証失敗',
+        content: 'ログインIDもしくはパスワードが間違っています',
       });
+    });
   };
 
   return (
