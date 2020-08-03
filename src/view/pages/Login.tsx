@@ -3,15 +3,7 @@ import { Button, Form, Input, Modal, Row } from 'antd';
 import styles from '../Root.module.css';
 import { DependencyProps } from '../../core/dependency';
 
-type Token = {
-  auth: {
-    token: string;
-  };
-};
-
 type Props = DependencyProps;
-
-const isToken = (token: any): token is Token => typeof token.token != undefined;
 
 const Login: React.FC<Props> = (props: Props) => {
   const [userId, setUserId] = useState('');
@@ -22,18 +14,16 @@ const Login: React.FC<Props> = (props: Props) => {
 
     props.dependency.authentication
       .authenticate(userId, password)
-      .then(res => {
-        if (isToken(res.data)) {
-          const response = res.data as Token;
-          localStorage.setItem('token', response.auth.token);
+      .then(token => {
+        if (token.auth != undefined) {
+          localStorage.setItem('token', token.auth.token);
           window.location.href = '/top';
+        } else {
+          Modal.error({
+            title: '認証失敗',
+            content: 'ログインIDもしくはパスワードが間違っています',
+          });
         }
-      })
-      .catch(() => {
-        Modal.error({
-          title: '認証失敗',
-          content: 'ログインIDもしくはパスワードが間違っています',
-        });
       });
   };
 
