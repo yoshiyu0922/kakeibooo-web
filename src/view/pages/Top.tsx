@@ -1,20 +1,21 @@
 import React from 'react';
 import IncomeSpendFormTabs from '../organisms/IncomeSpendingFormTabs';
-import IncomeSpendingList from '../list/incomeSpending/IncomeSpendingList';
-import Summary from '../list/asset/Summary';
+// import IncomeSpendingList from '../list/incomeSpending/IncomeSpendingList';
+// import Summary from '../list/asset/Summary';
 import styles from '../Root.module.css';
 import { Col, Row } from 'antd';
+import { DependencyProps } from '../../core/dependency';
 
-const Top: React.FC = () => {
+type Props = DependencyProps;
+
+const Top: React.FC<Props> = (props: Props) => {
   return (
     <div className={styles.contentTop}>
       <Row gutter={16}>
-        <Col span={6}>
-          <Summary />
-        </Col>
+        <Col span={6}>{/*<Summary />*/}</Col>
         <Col span={18}>
-          <IncomeSpendFormTabs />
-          <IncomeSpendingList offset={5} isMain={false} />
+          <IncomeSpendFormTabs dependency={props.dependency} />
+          {/*<IncomeSpendingList offset={5} isMain={false} />*/}
         </Col>
       </Row>
     </div>

@@ -16,7 +16,7 @@ import {
   MasterType,
   CategoryType,
 } from '../../types/Master';
-import { AccountType, initAccount } from '../../types/Account';
+import { initAccount } from '../../types/Account';
 import {
   initRegisterInputValue,
   RegisterIncomeSpendingParams,
@@ -24,6 +24,7 @@ import {
 import { useSelector } from 'react-redux';
 import { masterSelector } from '../../redux/AppStore';
 import Repository from '../../core/Repository';
+import { DependencyProps } from '../../core/dependency';
 
 const Option = Select.Option;
 
@@ -31,7 +32,7 @@ interface OwnProps {
   kbn: number;
 }
 
-type Props = OwnProps;
+type Props = OwnProps & DependencyProps;
 
 const IncomeSpendingForm: React.FC<Props> = (props: Props) => {
   const initAccounts = new Array(initAccount);
@@ -95,9 +96,7 @@ const IncomeSpendingForm: React.FC<Props> = (props: Props) => {
   };
 
   useEffect(() => {
-    const repository = Repository.instance;
-    repository.fetchAccounts((res: AxiosResponse) => {
-      const accounts = res.data as AccountType[];
+    props.dependency.account.fetchAll().then(accounts => {
       setAccounts(accounts);
     });
 
@@ -228,7 +227,7 @@ const IncomeSpendingForm: React.FC<Props> = (props: Props) => {
             >
               {accounts.map((h, key) => {
                 return (
-                  <Option value={h.accountId} key={key}>
+                  <Option value={h.id} key={key}>
                     {h.name}
                   </Option>
                 );

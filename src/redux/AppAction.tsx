@@ -20,9 +20,6 @@ function fetchMaster(graphQLClient: GraphQLClient) {
       graphQLClient: graphQLClient,
     })
       .fetchAll()
-      .then(res => {
-        return res.data as MasterType;
-      })
       .catch(err => {
         console.error(err);
         return {} as MasterType;

@@ -1,5 +1,6 @@
 import GraphQLClient from '../core/graphQLClient';
 import gql from 'graphql-tag';
+import { MasterType } from '../types/Master';
 
 class MasterRepository {
   private graphQLClient: GraphQLClient;
@@ -9,28 +10,32 @@ class MasterRepository {
   }
 
   public fetchAll() {
-    return this.graphQLClient.query(
-      gql`
-        query master {
-          categories {
-            id
-            name
-            isIncome
-            isDeleted
+    return this.graphQLClient
+      .query(
+        gql`
+          query master {
+            categories {
+              id
+              name
+              isIncome
+              isDeleted
+            }
+            categoryDetails {
+              id
+              categoryId
+              name
+              isDeleted
+            }
+            howToPays {
+              id
+              name
+            }
           }
-          categoryDetails {
-            id
-            categoryId
-            name
-            isDeleted
-          }
-          howToPays {
-            id
-            name
-          }
-        }
-      `
-    );
+        `
+      )
+      .then(res => {
+        return res.data as MasterType;
+      });
   }
 }
 

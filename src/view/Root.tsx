@@ -44,7 +44,11 @@ const Root: React.FC<Props> = (props: Props) => {
           <Switch>
             <Auth dependency={props.dependency}>
               <Switch>
-                <Route extract path="/top" component={Top} />
+                <Route
+                  extract
+                  path="/top"
+                  render={() => <Top dependency={props.dependency} />}
+                />
                 <Route
                   extract
                   path="/incomeSpending"

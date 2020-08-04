@@ -232,7 +232,7 @@ const EditModal: React.FC<Props> = props => {
               >
                 {accounts.map((h, key) => {
                   return (
-                    <Option value={h.accountId} key={key}>
+                    <Option value={h.id} key={key}>
                       {h.name}
                     </Option>
                   );

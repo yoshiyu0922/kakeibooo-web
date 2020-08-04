@@ -7,6 +7,8 @@ import GraphQLClient from './core/graphQLClient';
 import Dependency from './core/dependency';
 import UserRepository from './repository/userRepository';
 import Authentication from './usecase/authentication';
+import AccountRepository from './repository/accountRepository';
+import Account from './usecase/account';
 
 type Props = DispatchToPropsType;
 
@@ -19,12 +21,17 @@ const graphQLClient = new GraphQLClient({
 
 // repositories
 const userRepository = new UserRepository({ graphQLClient: graphQLClient });
+const accountRepository = new AccountRepository({
+  graphQLClient: graphQLClient,
+});
 
 // usecases
 const authentication = new Authentication({ userRepository: userRepository });
+const account = new Account({ accountRepository: accountRepository });
 
 const dependency: Dependency = {
   authentication: authentication,
+  account: account,
 };
 
 const App: React.FC<Props> = (props: Props) => {

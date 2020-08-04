@@ -14,9 +14,12 @@ class Authentication {
   }
 
   public async authenticate(userId: string, password: string) {
-    return await this.userRepository.auth(userId, password)
+    return await this.userRepository
+      .auth(userId, password)
       .then(res => {
-        return Authentication.isToken(res.data) ? res.data as Token : {} as Token;
+        return Authentication.isToken(res.data)
+          ? (res.data as Token)
+          : ({} as Token);
       })
       .catch(() => {
         return {} as Token;
@@ -24,8 +27,8 @@ class Authentication {
   }
 
   private static isToken(token: any): token is Token {
-    return typeof token.token != undefined
-  };
+    return typeof token.token != undefined;
+  }
 }
 
 export default Authentication;

@@ -1,5 +1,5 @@
 export type AccountType = {
-  accountId: number;
+  id: number;
   userId: number;
   assetId: number;
   name: String;
