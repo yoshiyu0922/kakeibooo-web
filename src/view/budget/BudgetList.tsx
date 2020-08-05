@@ -58,8 +58,8 @@ const BudgetList: React.FC = () => {
   const columns = [
     {
       title: '',
-      dataIndex: 'categoryId',
-      key: 'categoryId',
+      dataIndex: 'categoryDetailId',
+      key: 'categoryDetailId',
       render: (id: number, data: Budget) => {
         return (
           <React.Fragment>
@@ -141,7 +141,7 @@ const BudgetList: React.FC = () => {
       </Button>
       <Table
         pagination={{ pageSize: 1000 }}
-        rowKey={'categoryId'}
+        rowKey={'categoryDetailId'}
         columns={columns}
         dataSource={list}
         scroll={{ x: 1200 }}

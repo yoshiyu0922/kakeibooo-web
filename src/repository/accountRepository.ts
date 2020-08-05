@@ -9,12 +9,12 @@ class AccountRepository {
     this.graphQLClient = graphQLClient;
   }
 
-  public async fetchAll() {
+  public async fetchAll(userId: number) {
     return await this.graphQLClient
       .query(
         gql`
-          query account {
-            account(userId: 53341711000000) {
+          query account($userId: Long!) {
+            account(userId: $userId) {
               id
               userId
               assetId
@@ -24,7 +24,12 @@ class AccountRepository {
               isDeleted
             }
           }
-        `
+        `,
+        {
+          variables: {
+            userId: userId,
+          },
+        }
       )
       .then(res => {
         return res.data['account'] as AccountType[];

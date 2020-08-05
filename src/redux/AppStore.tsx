@@ -11,10 +11,10 @@ function createStoreByEnvironment() {
 
 const store = createStoreByEnvironment();
 
-export type MasterStoreType = ReturnType<typeof store.getState>;
+export type AppStoreType = ReturnType<typeof store.getState>;
 
 export default store;
 
-export const masterSelector = (state: MasterStoreType) => {
+export const appStateSelector = (state: AppStoreType) => {
   return state.app;
 };

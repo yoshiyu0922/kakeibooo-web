@@ -10,7 +10,7 @@ import Repository from '../../../core/Repository';
 import moment, { Moment } from 'moment';
 import EditModal from './EditModal';
 import { useSelector } from 'react-redux';
-import { masterSelector } from '../../../redux/AppStore';
+import { appStateSelector } from '../../../redux/AppStore';
 
 const { confirm } = Modal;
 
@@ -21,7 +21,7 @@ type Props = {
 
 const IncomeSpendingList: React.FC<Props> = props => {
   const [list, setList] = useState(initIncomeSpending);
-  const masterState = useSelector(masterSelector);
+  const masterState = useSelector(appStateSelector);
   const now = moment(Date.now());
   const [currentMonth, setCurrentMonth] = useState(now);
   const [month, setMonth] = useState(new Date());
@@ -215,7 +215,7 @@ const IncomeSpendingList: React.FC<Props> = props => {
           setCurrentMonth(_month);
           setIsShowModal(false);
         }}
-        masterData={masterState.value}
+        masterData={masterState.value.master}
       />
     </div>
   );

@@ -25,6 +25,26 @@ class UserRepository {
       }
     );
   }
+
+  public getUserByToken(token: String) {
+    return this.graphQLClient.query(
+      gql`
+        query user($token: String!) {
+          user(token: $token) {
+            id
+            frontUserId
+            name
+            isDeleted
+          }
+        }
+      `,
+      {
+        variables: {
+          token: token,
+        },
+      }
+    );
+  }
 }
 
 export default UserRepository;

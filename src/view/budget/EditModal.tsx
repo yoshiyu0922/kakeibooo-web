@@ -3,7 +3,7 @@ import { Form, Input, Modal, Row, Select, Spin } from 'antd';
 import styles from '../Root.module.css';
 import Repository from '../../core/Repository';
 import { useSelector } from 'react-redux';
-import { masterSelector } from '../../redux/AppStore';
+import { appStateSelector } from '../../redux/AppStore';
 import {
   Budget,
   initializeUpdateParams,
@@ -21,7 +21,7 @@ type Props = {
 const EditModal: React.FC<Props> = props => {
   const initHowToPay: number = 1;
   const [loadingState, setLoadingState] = useState(false);
-  const masterState = useSelector(masterSelector);
+  const masterState = useSelector(appStateSelector);
   const [inputParams, setInputParams] = useState<UpdateBudgetParams>(
     {} as UpdateBudgetParams
   );
@@ -52,7 +52,7 @@ const EditModal: React.FC<Props> = props => {
   };
 
   const showCategoryName = () => {
-    const target = masterState.value.categoryDetails.find(v => {
+    const target = masterState.value.master.categoryDetails.find(v => {
       return v.id === props.data.categoryId;
     });
 
@@ -106,7 +106,7 @@ const EditModal: React.FC<Props> = props => {
                   setInputParams(params);
                 }}
               >
-                {masterState.value.howToPays.map((h, key) => {
+                {masterState.value.master.howToPays.map((h, key) => {
                   return (
                     <Option value={h.id} key={key}>
                       {h.name}

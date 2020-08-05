@@ -23,7 +23,7 @@ export const initIncomeSpending = new Array<IncomeSpendingType>();
 export interface RegisterIncomeSpendingParams {
   accountId: number;
   accrualDate: string;
-  categoryId: number;
+  categoryDetailId: number;
   amount: number;
   howToPayId: number;
   isIncome: boolean;

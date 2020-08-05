@@ -17,7 +17,7 @@ import Repository from '../../../core/Repository';
 import { AxiosResponse } from 'axios';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
-import { masterSelector } from '../../../redux/AppStore';
+import { appStateSelector } from '../../../redux/AppStore';
 
 const Option = Select.Option;
 
@@ -29,7 +29,7 @@ type Props = {
 };
 const EditModal: React.FC<Props> = props => {
   const [loadingState, setLoadingState] = useState(false);
-  const masterState = useSelector(masterSelector);
+  const masterState = useSelector(appStateSelector);
   const [accounts, setAccounts] = useState(new Array(initAccount));
   const [parentCategories, setParentCategories] = useState(
     props.masterData.categories
@@ -85,7 +85,7 @@ const EditModal: React.FC<Props> = props => {
   }, []);
 
   useEffect(() => {
-    setParentCategories(masterState.value.categories);
+    setParentCategories(masterState.value.master.categories);
   }, [props.masterData]);
 
   const submit = () => {

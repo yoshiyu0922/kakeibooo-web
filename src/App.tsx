@@ -36,7 +36,7 @@ const dependency: Dependency = {
 
 const App: React.FC<Props> = (props: Props) => {
   useEffect(() => {
-    props.fetchMaster(graphQLClient, {} as AppState);
+    props.setAppState(graphQLClient, {} as AppState);
   }, []);
 
   return <Root dependency={dependency} />;
