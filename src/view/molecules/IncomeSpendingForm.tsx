@@ -10,11 +10,10 @@ import {
   Spin,
 } from 'antd';
 import styles from '../Root.module.css';
-import { AxiosResponse } from 'axios';
 import {
   CategoryDetailType,
-  MasterType,
   CategoryType,
+  MasterType,
 } from '../../types/Master';
 import { initAccount } from '../../types/Account';
 import {
@@ -22,9 +21,9 @@ import {
   RegisterIncomeSpendingParams,
 } from '../../types/IncomeSpending';
 import { useSelector } from 'react-redux';
-import { masterSelector } from '../../redux/AppStore';
-import Repository from '../../core/Repository';
+import { appStateSelector } from '../../redux/AppStore';
 import { DependencyProps } from '../../core/dependency';
+import { AppStateType } from '../../redux/AppState';
 
 const Option = Select.Option;
 
@@ -36,15 +35,15 @@ type Props = OwnProps & DependencyProps;
 
 const IncomeSpendingForm: React.FC<Props> = (props: Props) => {
   const initAccounts = new Array(initAccount);
-  const masterState = useSelector(masterSelector);
+  const appState = useSelector(appStateSelector);
   const [parentCategories, setParentCategories] = useState(
-    masterState.value.categories
+    appState.value.master.categories
   );
   const [categories, setCategories] = useState(
-    masterState.value.categoryDetails
+    appState.value.master.categoryDetails
   );
-  const [howToPays, setHowToPays] = useState(masterState.value.howToPays);
-  const [masterData, setMasterData] = useState(masterState.value);
+  const [howToPays, setHowToPays] = useState(appState.value.master.howToPays);
+  const [masterData, setMasterData] = useState(appState.value.master);
   const [accounts, setAccounts] = useState(initAccounts);
   const [loadingState, setLoadingState] = useState(false);
   const [inputParams, setInputParams] = useState<RegisterIncomeSpendingParams>(
@@ -62,22 +61,30 @@ const IncomeSpendingForm: React.FC<Props> = (props: Props) => {
     setCategories(list);
   };
 
-  const updateMaster = (m: MasterType) => {
-    const dispParentCategory = m.categories.filter((p: CategoryType) => {
+  const updateMaster = (m: AppStateType) => {
+    const dispParentCategory = m.master.categories.filter((p: CategoryType) => {
       return p.isIncome === (props.kbn !== 1);
     });
     setParentCategories(dispParentCategory);
-    setHowToPays(m.howToPays);
-    setMasterData(m);
+    setHowToPays(m.master.howToPays);
+    setMasterData(m.master);
   };
 
   const submit = () => {
     setLoadingState(true);
 
-    const repository = Repository.instance;
-    repository.registerIncomeSpending(
-      inputParams,
-      (_: AxiosResponse) => {
+    props.dependency.incomeSpending
+      .create({
+        userId: appState.value.user.id,
+        accountId: inputParams.accountId,
+        categoryDetailId: inputParams.categoryDetailId,
+        accrualDate: inputParams.accrualDate,
+        amount: inputParams.amount,
+        howToPayId: inputParams.howToPayId,
+        isIncome: inputParams.isIncome,
+        content: inputParams.content,
+      })
+      .then((_: any) => {
         Modal.info({
           title: '登録成功',
           content: '登録に成功しました',
@@ -85,32 +92,33 @@ const IncomeSpendingForm: React.FC<Props> = (props: Props) => {
             window.location.href = '/top';
           },
         });
-      },
-      () => {
+      })
+      .catch(() => {
         Modal.error({ title: '登録失敗', content: '登録に失敗しました' });
-      },
-      () => {
+      })
+      .finally(() => {
         setLoadingState(false);
-      }
-    );
+      });
   };
 
   useEffect(() => {
-    props.dependency.account.fetchAll().then(accounts => {
-      setAccounts(accounts);
+    setInputParams({
+      ...inputParams,
+      isIncome: props.kbn === SPEND_KBN,
     });
-
-    if (props.kbn === SPEND_KBN) {
-      setInputParams({
-        ...inputParams,
-        isIncome: true,
-      });
-    }
   }, []);
 
   useEffect(() => {
-    updateMaster(masterState.value);
-  }, [masterState]);
+    updateMaster(appState.value);
+
+    if (appState.value.user.id) {
+      props.dependency.account
+        .fetchAll(appState.value.user.id)
+        .then(accounts => {
+          setAccounts(accounts);
+        });
+    }
+  }, [appState]);
 
   const showHowToPayIfSpend = () => {
     if (props.kbn === INCOME_KBN) {
@@ -180,7 +188,7 @@ const IncomeSpendingForm: React.FC<Props> = (props: Props) => {
                 const id = data as number;
                 setInputParams({
                   ...inputParams,
-                  categoryId: id,
+                  categoryDetailId: id,
                 });
               }}
             >

@@ -19,10 +19,19 @@ export function setData(state: AppStateType): MasterActionTypes {
 
 function fetch(graphQLClient: GraphQLClient) {
   return async (dispatch: Dispatch<MasterActionTypes>) => {
-    const master: MasterType = await fetchMaster(graphQLClient);
-    const user = await fetchUser(graphQLClient);
+    const master = fetchMaster(graphQLClient);
+    const user = fetchUser(graphQLClient);
 
-    const result = { master: master, user: user } as AppStateType;
+    const result = await Promise.all([master, user])
+      .then((values: [MasterType, UserType]) => {
+        return {
+          master: values[0],
+          user: values[1],
+        } as AppStateType;
+      })
+      .catch(() => {
+        return {} as AppStateType;
+      });
 
     dispatch(setData(result));
     return result;
@@ -32,12 +41,7 @@ function fetch(graphQLClient: GraphQLClient) {
 async function fetchMaster(graphQLClient: GraphQLClient) {
   return await new MasterRepository({
     graphQLClient: graphQLClient,
-  })
-    .fetchAll()
-    .catch(err => {
-      console.error(err);
-      return {} as MasterType;
-    });
+  }).fetchAll();
 }
 
 async function fetchUser(graphQLClient: GraphQLClient) {
@@ -46,15 +50,7 @@ async function fetchUser(graphQLClient: GraphQLClient) {
 
   return await new UserRepository({
     graphQLClient: graphQLClient,
-  })
-    .getUserByToken(token)
-    .then(res => {
-      return res.data['user'] as UserType;
-    })
-    .catch(err => {
-      console.error(err);
-      return {} as UserType;
-    });
+  }).getUserByToken(token);
 }
 
 const shouldFetchPosts = (state: AppState) => {

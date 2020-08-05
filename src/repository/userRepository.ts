@@ -1,5 +1,6 @@
 import GraphQLClient from '../core/graphQLClient';
 import gql from 'graphql-tag';
+import { UserType } from '../types/user';
 
 class UserRepository {
   private graphQLClient: GraphQLClient;
@@ -27,23 +28,27 @@ class UserRepository {
   }
 
   public getUserByToken(token: String) {
-    return this.graphQLClient.query(
-      gql`
-        query user($token: String!) {
-          user(token: $token) {
-            id
-            frontUserId
-            name
-            isDeleted
+    return this.graphQLClient
+      .query(
+        gql`
+          query user($token: String!) {
+            user(token: $token) {
+              id
+              frontUserId
+              name
+              isDeleted
+            }
           }
+        `,
+        {
+          variables: {
+            token: token,
+          },
         }
-      `,
-      {
-        variables: {
-          token: token,
-        },
-      }
-    );
+      )
+      .then(res => {
+        return res.data['user'] as UserType;
+      });
   }
 }
 

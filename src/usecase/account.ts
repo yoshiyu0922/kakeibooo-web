@@ -7,8 +7,8 @@ class Account {
     this.accountRepository = accountRepository;
   }
 
-  public async fetchAll() {
-    return await this.accountRepository.fetchAll();
+  public async fetchAll(userId: number) {
+    return await this.accountRepository.fetchAll(userId);
   }
 }
 
