@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Icon, Table } from 'antd';
-import Repository from '../../core/Repository';
-import { Budget, BudgetDetail, initBudgets } from '../../types/Budget';
+import Repository from '../../core/repository';
+import { Budget, BudgetDetail, initBudgets } from '../../types/budget';
 import { AxiosResponse } from 'axios';
 import EditModal from './EditModal';
 import moment, { Moment } from 'moment';

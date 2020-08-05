@@ -1,4 +1,4 @@
-import { MasterType } from '../types/Master';
+import { MasterType } from '../types/master';
 import { UserType } from '../types/user';
 
 export type AppStateType = {

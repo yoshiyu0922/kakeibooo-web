@@ -10,20 +10,16 @@ import {
   Spin,
 } from 'antd';
 import styles from '../Root.module.css';
-import {
-  CategoryDetailType,
-  CategoryType,
-  MasterType,
-} from '../../types/Master';
-import { initAccount } from '../../types/Account';
+import { CategoryDetailType, CategoryType } from '../../types/master';
+import { initAccount } from '../../types/account';
 import {
   initRegisterInputValue,
   RegisterIncomeSpendingParams,
-} from '../../types/IncomeSpending';
+} from '../../types/incomeSpending';
 import { useSelector } from 'react-redux';
-import { appStateSelector } from '../../redux/AppStore';
+import { appStateSelector } from '../../redux/appStore';
 import { DependencyProps } from '../../core/dependency';
-import { AppStateType } from '../../redux/AppState';
+import { AppStateType } from '../../redux/appState';
 
 const Option = Select.Option;
 

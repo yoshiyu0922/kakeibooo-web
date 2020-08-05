@@ -1,6 +1,6 @@
-import { MasterType } from '../types/Master';
+import { MasterType } from '../types/master';
 import { Dispatch } from 'redux';
-import { AppState, AppStateType } from './AppState';
+import { AppState, AppStateType } from './appState';
 import GraphQLClient from '../core/graphQLClient';
 import MasterRepository from '../repository/masterRepository';
 import UserRepository from '../repository/userRepository';

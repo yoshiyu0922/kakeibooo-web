@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
-import { AppState, AppStateType } from './AppState';
-import { MasterActionTypes, SET_APP_STATE } from './AppAction';
-import { initMaster } from '../types/Master';
+import { AppState, AppStateType } from './appState';
+import { MasterActionTypes, SET_APP_STATE } from './appAction';
+import { initMaster } from '../types/master';
 import { initUser } from '../types/user';
 
 const initialState: AppState = {

@@ -1,7 +1,7 @@
-import { AppState } from './AppState';
+import { AppState } from './appState';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { fetchIfNeed, MasterActionTypes } from './AppAction';
+import { fetchIfNeed, MasterActionTypes } from './appAction';
 import App from '../App';
 import GraphQLClient from '../core/graphQLClient';
 

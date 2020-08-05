@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Summary.module.css';
-import { AssetType, initAssets } from '../../../types/Asset';
-import Repository from '../../../core/Repository';
+import { AssetType, initAssets } from '../../../types/asset';
+import Repository from '../../../core/repository';
 import { AxiosResponse } from 'axios';
 
 const Summary: React.FC = () => {

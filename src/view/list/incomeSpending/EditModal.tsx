@@ -5,19 +5,19 @@ import {
   initializeUpdateParams,
   initUpdateInputValue,
   UpdateIncomeSpendingParams,
-} from '../../../types/IncomeSpending';
+} from '../../../types/incomeSpending';
 import styles from '../../Root.module.css';
-import { AccountType, initAccount } from '../../../types/Account';
+import { AccountType, initAccount } from '../../../types/account';
 import {
   CategoryDetailType,
   initMaster,
   MasterType,
-} from '../../../types/Master';
-import Repository from '../../../core/Repository';
+} from '../../../types/master';
+import Repository from '../../../core/repository';
 import { AxiosResponse } from 'axios';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
-import { appStateSelector } from '../../../redux/AppStore';
+import { appStateSelector } from '../../../redux/appStore';
 
 const Option = Select.Option;
 

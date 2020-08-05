@@ -5,12 +5,12 @@ import styles from '../../Root.module.css';
 import {
   IncomeSpendingType,
   initIncomeSpending,
-} from '../../../types/IncomeSpending';
-import Repository from '../../../core/Repository';
+} from '../../../types/incomeSpending';
+import Repository from '../../../core/repository';
 import moment, { Moment } from 'moment';
 import EditModal from './EditModal';
 import { useSelector } from 'react-redux';
-import { appStateSelector } from '../../../redux/AppStore';
+import { appStateSelector } from '../../../redux/appStore';
 
 const { confirm } = Modal;
 

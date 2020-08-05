@@ -1,6 +1,6 @@
 import GraphQLClient from '../core/graphQLClient';
 import gql from 'graphql-tag';
-import { AccountType } from '../types/Account';
+import { AccountType } from '../types/account';
 
 class AccountRepository {
   private graphQLClient: GraphQLClient;

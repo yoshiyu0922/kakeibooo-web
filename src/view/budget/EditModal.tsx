@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Input, Modal, Row, Select, Spin } from 'antd';
 import styles from '../Root.module.css';
-import Repository from '../../core/Repository';
+import Repository from '../../core/repository';
 import { useSelector } from 'react-redux';
-import { appStateSelector } from '../../redux/AppStore';
+import { appStateSelector } from '../../redux/appStore';
 import {
   Budget,
   initializeUpdateParams,
   UpdateBudgetParams,
-} from '../../types/Budget';
+} from '../../types/budget';
 import { AxiosResponse } from 'axios';
 
 const Option = Select.Option;

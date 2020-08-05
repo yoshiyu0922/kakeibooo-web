@@ -15,7 +15,7 @@ const Login: React.FC<Props> = (props: Props) => {
     props.dependency.authentication
       .authenticate(userId, password)
       .then(token => {
-        if (token.auth != undefined) {
+        if (token.auth !== undefined) {
           localStorage.setItem('token', token.auth.token);
           window.location.href = '/top';
         } else {

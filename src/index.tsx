@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
-import store from './redux/AppStore';
+import store from './redux/appStore';
 import { ConfigProvider } from 'antd';
 import jaJP from 'antd/lib/locale-provider/ja_JP';
-import AppContainer from './redux/AppContainer';
+import AppContainer from './redux/appContainer';
 
 ReactDOM.render(
   <Provider store={store}>

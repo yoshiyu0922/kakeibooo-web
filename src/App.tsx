@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import 'antd/dist/antd.css';
 import Root from './view/Root';
-import { DispatchToPropsType } from './redux/AppContainer';
-import { AppState } from './redux/AppState';
+import { DispatchToPropsType } from './redux/appContainer';
+import { AppState } from './redux/appState';
 import GraphQLClient from './core/graphQLClient';
 import Dependency from './core/dependency';
 import UserRepository from './repository/userRepository';

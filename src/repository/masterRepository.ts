@@ -1,6 +1,6 @@
 import GraphQLClient from '../core/graphQLClient';
 import gql from 'graphql-tag';
-import { MasterType } from '../types/Master';
+import { MasterType } from '../types/master';
 
 class MasterRepository {
   private graphQLClient: GraphQLClient;
