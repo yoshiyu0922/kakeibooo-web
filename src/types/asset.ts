@@ -1,18 +1,12 @@
+import { AccountType } from './account';
+
 export type AssetType = {
-  assetId: number;
+  id: number;
+  userId: number;
   name: string;
-  accounts: AccountType[];
   sortIndex: number;
   isDeleted: boolean;
+  accounts: AccountType[];
 };
 
-export type AccountType = {
-  accountId: number;
-  userId: number;
-  assetId: number;
-  name: string;
-  balance: number;
-  sortIndex: number;
-  isDeleted: boolean;
-};
 export const initAssets = new Array<AssetType>();

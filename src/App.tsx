@@ -11,6 +11,8 @@ import AccountRepository from './repository/accountRepository';
 import Account from './usecase/account';
 import IncomeSpendingRepository from './repository/incomeSpendingRepository';
 import IncomeSpending from './usecase/incomeSpending';
+import AssetRepository from './repository/assetRepository';
+import Asset from './usecase/asset';
 
 type Props = DispatchToPropsType;
 
@@ -29,6 +31,7 @@ const accountRepository = new AccountRepository({
 const incomeSpendingRepository = new IncomeSpendingRepository({
   graphQLClient: graphQLClient,
 });
+const assetRepository = new AssetRepository({ graphQLClient: graphQLClient });
 
 // usecases
 const authentication = new Authentication({ userRepository: userRepository });
@@ -36,11 +39,13 @@ const account = new Account({ accountRepository: accountRepository });
 const incomeSpending = new IncomeSpending({
   incomeSpendingRepository: incomeSpendingRepository,
 });
+const asset = new Asset({ assetRepository: assetRepository });
 
 const dependency: Dependency = {
   authentication: authentication,
   account: account,
   incomeSpending: incomeSpending,
+  asset: asset,
 };
 
 const App: React.FC<Props> = (props: Props) => {
