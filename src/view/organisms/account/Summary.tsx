@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { initAssets } from '../../types/asset';
+import { initAssets } from '../../../types/asset';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
-import { appStateSelector } from '../../redux/appStore';
-import { DependencyProps } from '../../core/dependency';
+import { appStateSelector } from '../../../redux/appStore';
+import { DependencyProps } from '../../../core/dependency';
 
 const Title = styled.h2`
   margin-top: 10px;

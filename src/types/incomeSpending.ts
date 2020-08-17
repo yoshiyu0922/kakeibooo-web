@@ -1,15 +1,15 @@
 import moment from 'moment';
 
 export type IncomeSpendingType = {
-  incomeSpendingId: number;
+  id: number;
   userId: number;
   accountId: number;
   accrualDate: Date;
-  parentCategoryId: number;
   categoryId: number;
+  categoryDetailId: number;
   accountName: string;
-  parentCategoryName: string;
   categoryName: string;
+  categoryDetailName: string;
   amount: number;
   howToPayId: number;
   howToPayName: string;
@@ -33,11 +33,11 @@ export interface RegisterIncomeSpendingParams {
 export const initRegisterInputValue = {} as RegisterIncomeSpendingParams;
 
 export interface UpdateIncomeSpendingParams {
-  incomeSpendingId: number;
+  id: number;
   accountId: number;
   accrualDate: string;
-  parentCategoryId: number;
   categoryId: number;
+  categoryDetailId: number;
   amount: number;
   howToPayId: number;
   isIncome: boolean;
@@ -49,11 +49,11 @@ export const initUpdateInputValue = {} as UpdateIncomeSpendingParams;
 
 export const initializeUpdateParams = (data: IncomeSpendingType) => {
   return {
-    incomeSpendingId: data.incomeSpendingId,
+    id: data.id,
     accountId: data.accountId,
     accrualDate: moment(data.accrualDate).format('YYYY-MM-DD hh:mm:ss'),
-    parentCategoryId: data.parentCategoryId,
     categoryId: data.categoryId,
+    categoryDetailId: data.categoryDetailId,
     amount: data.amount < 0 ? data.amount * -1 : data.amount,
     howToPayId: data.howToPayId,
     isIncome: data.isIncome,

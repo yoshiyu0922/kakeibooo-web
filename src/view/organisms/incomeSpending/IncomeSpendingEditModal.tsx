@@ -7,17 +7,16 @@ import {
   UpdateIncomeSpendingParams,
 } from '../../../types/incomeSpending';
 import styles from '../../Root.module.css';
-import { AccountType, initAccount } from '../../../types/account';
+import { initAccount } from '../../../types/account';
 import {
   CategoryDetailType,
   initMaster,
   MasterType,
 } from '../../../types/master';
-import Repository from '../../../core/repository';
-import { AxiosResponse } from 'axios';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { appStateSelector } from '../../../redux/appStore';
+import { DependencyProps } from '../../../core/dependency';
 
 const Option = Select.Option;
 
@@ -26,14 +25,12 @@ type Props = {
   data: IncomeSpendingType;
   onCloseAfterUpdated: () => void;
   masterData: MasterType;
-};
-const EditModal: React.FC<Props> = props => {
+} & DependencyProps;
+
+const IncomeSpendingEditModal: React.FC<Props> = props => {
   const [loadingState, setLoadingState] = useState(false);
-  const masterState = useSelector(appStateSelector);
+  const appState = useSelector(appStateSelector);
   const [accounts, setAccounts] = useState(new Array(initAccount));
-  const [parentCategories, setParentCategories] = useState(
-    props.masterData.categories
-  );
   const [parentCategoryId, setParentCategoryId] = useState(0);
   const [categoryId, setCategoryId] = useState(0);
   const [categories, setCategories] = useState(initMaster.categoryDetails);
@@ -67,8 +64,8 @@ const EditModal: React.FC<Props> = props => {
     // 親ComponentのStateが更新された場合、このComponentのStateを更新させる
     const params = initializeUpdateParams(props.data);
     setInputParams(params);
-    setParentCategoryId(props.data.parentCategoryId);
-    setCategoryId(props.data.categoryId);
+    setParentCategoryId(props.data.categoryId);
+    setCategoryId(props.data.categoryDetailId);
   }, [props.data]);
 
   useEffect(() => {
@@ -77,37 +74,44 @@ const EditModal: React.FC<Props> = props => {
   }, [inputParams]);
 
   useEffect(() => {
-    if (!masterState.isFetching)
-      Repository.instance.fetchAccounts((res: AxiosResponse) => {
-        const accounts = res.data as AccountType[];
-        setAccounts(accounts);
-      });
+    if (!appState.isFetching)
+      props.dependency.account
+        .fetchAll(appState.value.user.id)
+        .then(accounts => {
+          setAccounts(accounts);
+        });
   }, []);
-
-  useEffect(() => {
-    setParentCategories(masterState.value.master.categories);
-  }, [props.masterData]);
 
   const submit = () => {
     setLoadingState(true);
-    const repository = Repository.instance;
-    const data = {
-      ...inputParams,
+    const input = {
+      id: inputParams.id,
+      userId: appState.value.user.id,
+      accountId: inputParams.accountId,
+      categoryDetailId: inputParams.categoryDetailId,
       accrualDate: moment(inputParams.accrualDate).format('YYYY-MM-DD'),
+      amount: inputParams.amount,
+      howToPayId: inputParams.howToPayId,
+      isIncome: inputParams.isIncome,
+      content: inputParams.content,
     };
-    repository.updateIncomeSpend(
-      data,
-      (_: AxiosResponse) => {
-        Modal.info({ title: '更新成功', content: '更新に成功しました' });
-        props.onCloseAfterUpdated();
-      },
-      () => {
+    props.dependency.incomeSpending
+      .update(input)
+      .then((_: number) => {
+        Modal.info({
+          title: '更新成功',
+          content: '更新に成功しました',
+          onOk() {
+            props.onCloseAfterUpdated();
+          },
+        });
+      })
+      .catch(() => {
         Modal.error({ title: '更新失敗', content: '更新に失敗しました' });
-      },
-      () => {
+      })
+      .finally(() => {
         setLoadingState(false);
-      }
-    );
+      });
   };
 
   return (
@@ -143,7 +147,7 @@ const EditModal: React.FC<Props> = props => {
                 onChange={id => updateCategories(id, true)}
                 value={parentCategoryId}
               >
-                {parentCategories.map((c, key) => {
+                {props.masterData.categories.map((c, key) => {
                   return (
                     <Option value={c.id} key={key}>
                       {c.name}
@@ -162,7 +166,7 @@ const EditModal: React.FC<Props> = props => {
                   setCategoryId(data);
                   setInputParams({
                     ...inputParams,
-                    categoryId: data,
+                    categoryDetailId: data,
                   });
                 }}
               >
@@ -259,4 +263,4 @@ const EditModal: React.FC<Props> = props => {
   );
 };
 
-export default EditModal;
+export default IncomeSpendingEditModal;

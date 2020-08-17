@@ -18,10 +18,15 @@ class GraphQLClient {
         },
       };
     });
-
     this.apollo = new ApolloClient({
       link: authLink.concat(createHttpLink({ uri: url })),
       cache: new InMemoryCache(),
+      defaultOptions: {
+        query: {
+          fetchPolicy: 'no-cache',
+          errorPolicy: 'all',
+        },
+      },
     });
   }
 

@@ -3,11 +3,11 @@ import 'antd/dist/antd.css';
 import styles from './Root.module.css';
 import { Layout } from 'antd';
 import Top from './pages/Top';
-import IncomeSpendingList from './list/incomeSpending/IncomeSpendingList';
 import BudgetList from './budget/BudgetList';
 import { BrowserRouter, NavLink, Route, Switch } from 'react-router-dom';
 import Auth from './Auth';
 import { DependencyProps } from '../core/dependency';
+import IncomeSpendingList from './pages/IncomeSpendingList';
 
 const { Header, Footer, Content } = Layout;
 
@@ -53,7 +53,7 @@ const Root: React.FC<Props> = (props: Props) => {
                   extract
                   path="/incomeSpending"
                   component={() => (
-                    <IncomeSpendingList offset={30} isMain={true} />
+                    <IncomeSpendingList dependency={props.dependency} />
                   )}
                 />
                 <Route extract path="/budget" component={BudgetList} />>

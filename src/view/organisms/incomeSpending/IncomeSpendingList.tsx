@@ -1,27 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Icon, Modal, Table } from 'antd';
-import { AxiosResponse } from 'axios';
 import styles from '../../Root.module.css';
 import {
   IncomeSpendingType,
   initIncomeSpending,
 } from '../../../types/incomeSpending';
-import Repository from '../../../core/repository';
 import moment, { Moment } from 'moment';
-import EditModal from './EditModal';
+import IncomeSpendingEditModal from './IncomeSpendingEditModal';
 import { useSelector } from 'react-redux';
 import { appStateSelector } from '../../../redux/appStore';
+import { DependencyProps } from '../../../core/dependency';
 
 const { confirm } = Modal;
 
 type Props = {
   offset: number;
   isMain: boolean;
-};
+} & DependencyProps;
 
 const IncomeSpendingList: React.FC<Props> = props => {
   const [list, setList] = useState(initIncomeSpending);
-  const masterState = useSelector(appStateSelector);
+  const appState = useSelector(appStateSelector);
   const now = moment(Date.now());
   const [currentMonth, setCurrentMonth] = useState(now);
   const [month, setMonth] = useState(new Date());
@@ -29,21 +28,21 @@ const IncomeSpendingList: React.FC<Props> = props => {
   const [selectedData, setSelectedData] = useState({} as IncomeSpendingType);
 
   const updateList = (_month: Moment) => {
-    const repository = Repository.instance;
+    const userId = appState.value.user.id;
     const paramMonth = parseInt(_month.format('YYYYMM'));
-    repository.fetchIncomeSpendMonthly(paramMonth, (res: AxiosResponse) => {
-      const data = res.data.incomeSpendResponses as IncomeSpendingType[];
-      const list = data.map((v, _) => {
-        v.amount = v.isIncome ? v.amount : -1 * v.amount;
-        return v;
+    const params = { userId: userId, yyyymm: paramMonth, limit: 300 };
+    props.dependency.incomeSpending.search(params).then(result => {
+      const list = result.map((row, _) => {
+        const amount = row.isIncome ? row.amount : -1 * row.amount;
+        return { ...row, ...{ amount: amount } };
       });
       setList(list);
     });
   };
 
   useEffect(() => {
-    if (!masterState.isFetching) updateList(moment(Date.now()));
-  }, [masterState]);
+    if (appState.value.user.id !== undefined) updateList(now);
+  }, [appState]);
 
   const confirmDelete = (id: number, data: IncomeSpendingType) => {
     confirm({
@@ -53,26 +52,27 @@ const IncomeSpendingList: React.FC<Props> = props => {
           <ul>
             <li>発生日: {data.accrualDate}</li>
             <li>金額: {data.amount.toLocaleString()}円</li>
-            <li>カテゴリ: {data.categoryName}</li>
+            <li>カテゴリ: {data.categoryDetailName}</li>
             <li>内容: {data.content}</li>
           </ul>
         </div>
       ),
       onOk() {
-        const repository = Repository.instance;
-        repository.deleteIncomeSpend(
-          id,
-          (_: AxiosResponse) => {
+        const userId = appState.value.user.id;
+        const params = {
+          id: id,
+          userId: userId,
+        };
+        props.dependency.incomeSpending
+          .delete(params)
+          .then(id => {
             Modal.info({ title: '削除成功', content: '削除に成功しました' });
-            const updated = list.filter(
-              (i: IncomeSpendingType) => i.incomeSpendingId !== id
-            );
+            const updated = list.filter((i: IncomeSpendingType) => i.id !== id);
             setList(updated);
-          },
-          () => {
+          })
+          .catch(() => {
             Modal.error({ title: '削除失敗', content: '削除に失敗しました' });
-          }
-        );
+          });
       },
       onCancel() {},
     });
@@ -99,8 +99,8 @@ const IncomeSpendingList: React.FC<Props> = props => {
   const columns = [
     {
       title: '',
-      dataIndex: 'incomeSpendingId',
-      key: 'incomeSpendingId',
+      dataIndex: 'id',
+      key: 'id',
       render: (id: number, data: IncomeSpendingType) => {
         if (props.isMain) {
           return (
@@ -108,13 +108,18 @@ const IncomeSpendingList: React.FC<Props> = props => {
               <Button size="small" onClick={() => showModal(id, data)}>
                 <Icon type="edit" />
               </Button>
+              <Button size="small" onClick={() => confirmDelete(id, data)}>
+                <Icon type="delete" />
+              </Button>
             </React.Fragment>
           );
         } else {
           return (
-            <Button size="small" onClick={() => confirmDelete(id, data)}>
-              <Icon type="delete" />
-            </Button>
+            <React.Fragment>
+              <Button size="small" onClick={() => confirmDelete(id, data)}>
+                <Icon type="delete" />
+              </Button>
+            </React.Fragment>
           );
         }
       },
@@ -150,7 +155,7 @@ const IncomeSpendingList: React.FC<Props> = props => {
       render: (name: string, record: IncomeSpendingType) => {
         return (
           <span>
-            {record.parentCategoryName} > {name}
+            {record.categoryName} > {name}
           </span>
         );
       },
@@ -201,12 +206,12 @@ const IncomeSpendingList: React.FC<Props> = props => {
       {showMonthSelectionIfCanEdit()}
       <Table
         pagination={{ pageSize: props.offset }}
-        rowKey={'incomeSpendingId'}
+        rowKey={'id'}
         columns={columns}
         dataSource={list}
         scroll={{ x: 1200 }}
       />
-      <EditModal
+      <IncomeSpendingEditModal
         isShowModal={isShowModal}
         data={selectedData}
         onCloseAfterUpdated={() => {
@@ -215,7 +220,8 @@ const IncomeSpendingList: React.FC<Props> = props => {
           setCurrentMonth(_month);
           setIsShowModal(false);
         }}
-        masterData={masterState.value.master}
+        masterData={appState.value.master}
+        dependency={props.dependency}
       />
     </div>
   );

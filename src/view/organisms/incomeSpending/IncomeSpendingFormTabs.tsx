@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { Tabs } from 'antd';
-import IncomeSpendingForm from '../molecules/IncomeSpendingForm';
-import { DependencyProps } from '../../core/dependency';
+import IncomeSpendingForm from './IncomeSpendingForm';
+import { DependencyProps } from '../../../core/dependency';
 
 const TabPane = Tabs.TabPane;
 
