@@ -2,8 +2,8 @@ import { MasterType } from '../types/master';
 import { Dispatch } from 'redux';
 import { AppState, AppStateType } from './appState';
 import GraphQLClient from '../core/graphQLClient';
-import MasterRepository from '../repository/masterRepository';
-import UserRepository from '../repository/userRepository';
+import MasterRepository from '../repository/master/masterRepository';
+import UserRepository from '../repository/user/userRepository';
 import { UserType } from '../types/user';
 
 export const SET_APP_STATE = 'SET_APP_STATE';

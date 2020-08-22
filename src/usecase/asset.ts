@@ -1,4 +1,4 @@
-import AssetRepository from '../repository/assetRepository';
+import AssetRepository from '../repository/asset/assetRepository';
 
 class Asset {
   private assetRepository: AssetRepository;

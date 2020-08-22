@@ -5,13 +5,13 @@ import { DispatchToPropsType } from './redux/appContainer';
 import { AppState } from './redux/appState';
 import GraphQLClient from './core/graphQLClient';
 import Dependency from './core/dependency';
-import UserRepository from './repository/userRepository';
+import UserRepository from './repository/user/userRepository';
 import Authentication from './usecase/authentication';
-import AccountRepository from './repository/accountRepository';
+import AccountRepository from './repository/account/accountRepository';
 import Account from './usecase/account';
-import IncomeSpendingRepository from './repository/incomeSpendingRepository';
+import IncomeSpendingRepository from './repository/incomeSpending/incomeSpendingRepository';
 import IncomeSpending from './usecase/incomeSpending';
-import AssetRepository from './repository/assetRepository';
+import AssetRepository from './repository/asset/assetRepository';
 import Asset from './usecase/asset';
 
 type Props = DispatchToPropsType;

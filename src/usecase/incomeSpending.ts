@@ -1,4 +1,4 @@
-import IncomeSpendingRepository from '../repository/incomeSpendingRepository';
+import IncomeSpendingRepository from '../repository/incomeSpending/incomeSpendingRepository';
 
 class IncomeSpending {
   private incomeSpendingRepository: IncomeSpendingRepository;

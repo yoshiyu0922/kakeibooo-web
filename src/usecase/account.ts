@@ -1,4 +1,4 @@
-import AccountRepository from '../repository/accountRepository';
+import AccountRepository from '../repository/account/accountRepository';
 
 class Account {
   private accountRepository: AccountRepository;

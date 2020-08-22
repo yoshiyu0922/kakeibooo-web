@@ -1,4 +1,4 @@
-import UserRepository from '../repository/userRepository';
+import UserRepository from '../repository/user/userRepository';
 
 type Token = {
   auth: {
